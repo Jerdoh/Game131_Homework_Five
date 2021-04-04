@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using Types;
 
 public class EnemyDesignerWindow : EditorWindow
 {
@@ -17,6 +18,14 @@ public class EnemyDesignerWindow : EditorWindow
     Rect rogueSection;
     Rect warriorSection;
 
+    static MageData mageData;
+    static RogueData rogueData;
+    static WarriorData warriorData;
+
+    public static MageData MageInfo { get { return mageData; } }
+    public static RogueData RogueInfo { get { return rogueData; } }
+    public static WarriorData WarriorInfo { get { return warriorData; } }
+
     [MenuItem("Window/Enemy Designer")]
     static void OpenWindow()
     {
@@ -31,6 +40,14 @@ public class EnemyDesignerWindow : EditorWindow
     void OnEnable()
     {
         InitTextures();
+        InitData();
+    }
+
+    public static void InitData()
+    {
+        mageData = (MageData)ScriptableObject.CreateInstance(typeof(MageData));
+        rogueData = (RogueData)ScriptableObject.CreateInstance(typeof(RogueData));
+        warriorData = (WarriorData)ScriptableObject.CreateInstance(typeof(WarriorData));
     }
 
     /// <summary>
@@ -97,7 +114,7 @@ public class EnemyDesignerWindow : EditorWindow
     void DrawHeader()
     {
         GUILayout.BeginArea(headerSection);
-
+        GUILayout.Label("Enemy Designer");
         GUILayout.EndArea();
     }
 
@@ -107,6 +124,18 @@ public class EnemyDesignerWindow : EditorWindow
     void DrawMageSettings()
     {
         GUILayout.BeginArea(mageSection);
+        GUILayout.Label("Mage");
+
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.Label("Damage");
+        mageData.dmgType = (MageDmgType)EditorGUILayout.EnumPopup(mageData.dmgType);
+        EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.Label("Weapon");
+        mageData.wpnType = (MageWpnType)EditorGUILayout.EnumPopup(mageData.wpnType);
+        EditorGUILayout.EndHorizontal();
+
         GUILayout.EndArea();
     }
 
@@ -116,6 +145,18 @@ public class EnemyDesignerWindow : EditorWindow
     void DrawRogueSettings()
     {
         GUILayout.BeginArea(rogueSection);
+        GUILayout.Label("Rogue");
+
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.Label("Strategy");
+        rogueData.strategyType = (RogueStrategyType)EditorGUILayout.EnumPopup(rogueData.strategyType);
+        EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.Label("Weapon");
+        rogueData.wpnType = (RogueWpnType)EditorGUILayout.EnumPopup(rogueData.wpnType);
+        EditorGUILayout.EndHorizontal();
+
         GUILayout.EndArea();
     }
 
@@ -125,6 +166,18 @@ public class EnemyDesignerWindow : EditorWindow
     void DrawWarriorSettings()
     {
         GUILayout.BeginArea(warriorSection);
+        GUILayout.Label("Warrior");
+
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.Label("Class");
+        warriorData.classType = (WarriorClassType)EditorGUILayout.EnumPopup(warriorData.classType);
+        EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.Label("Weapon");
+        warriorData.wpnType = (WarriorWpnType)EditorGUILayout.EnumPopup(warriorData.wpnType);
+        EditorGUILayout.EndHorizontal();
+
         GUILayout.EndArea();
     }
 }
