@@ -34,7 +34,7 @@ public class EnemyDesignerWindow : EditorWindow
     public static RogueData RogueInfo { get { return rogueData; } }
     public static WarriorData WarriorInfo { get { return warriorData; } }
 
-    float iconSize = 80;
+    float iconSize = 40;
 
     [MenuItem("Window/Enemy Designer")]
     static void OpenWindow()
